@@ -26,6 +26,9 @@ app.use("/api", getProductBasedOnId);
 app.use("/api", getProductsBasedOnCategory);
 app.use("/api", deleteProducts);
 
-app.listen(5000, () => {
-  console.log("Server Running on port 5000");
+// Local port ke sath process.env.PORT lagana zaroori hai
+const PORT = process.env.PORT || 5000; 
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
