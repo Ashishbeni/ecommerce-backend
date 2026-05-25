@@ -7,6 +7,8 @@ require("./routes/db");
 
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
+
 
 // ROUTES
 const postRoutes = require("./routes/post");
