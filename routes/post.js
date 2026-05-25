@@ -1,14 +1,11 @@
-const upload = require("../middleware/upload");
-
 const express = require("express");
 const router = express.Router();
 
 const db = require("./db");
 
-router.post("/add", upload.single("image"), (req, res) => {
+const upload = require("../middleware/upload");
 
-  console.log("BODY:", req.body);
-  console.log("FILE:", req.file);
+router.post("/add", upload.single("image"), (req, res) => {
 
   try {
 
@@ -20,15 +17,9 @@ router.post("/add", upload.single("image"), (req, res) => {
       quantity
     } = req.body;
 
-    // CHECK IMAGE
-    if (!req.file) {
-      return res.status(400).json({
-        msg: "Image not uploaded"
-      });
-    }
-
-    // IMAGE PATH
-    const image = `/uploads/${req.file.filename}`;
+    const image = req.file
+      ? `/uploads/${req.file.filename}`
+      : "";
 
     const sql = `
       INSERT INTO products
@@ -49,17 +40,16 @@ router.post("/add", upload.single("image"), (req, res) => {
       (err, result) => {
 
         if (err) {
-
-          console.log("SQL ERROR:", err);
+          console.log(err);
 
           return res.status(500).json({
             msg: "Database Error"
           });
-
         }
 
         res.status(201).json({
-          msg: "Product Added"
+          msg: "Product Added",
+          image
         });
 
       }
@@ -67,7 +57,7 @@ router.post("/add", upload.single("image"), (req, res) => {
 
   } catch (error) {
 
-    console.log("SERVER ERROR:", error);
+    console.log(error);
 
     res.status(500).json({
       msg: "Server Error"
