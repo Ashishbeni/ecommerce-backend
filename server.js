@@ -18,6 +18,7 @@ const Login = require("./routes/adminLogin");
 const getProductBasedOnId = require("./routes/getProductBasedOnId");
 const getProductsBasedOnCategory = require("./routes/getProductsBasedOnCategory");
 const deleteProducts = require("./routes/deleteProducts");
+const updateProducts = require("./routes/updateProducts");
 
 // USE ROUTES
 app.use("/api", postRoutes);
@@ -27,6 +28,7 @@ app.use("/api", Login);
 app.use("/api", getProductBasedOnId);
 app.use("/api", getProductsBasedOnCategory);
 app.use("/api", deleteProducts);
+app.use("/api", updateProducts);
 
 // Local port ke sath process.env.PORT lagana zaroori hai
 const PORT = process.env.PORT || 5000; 
